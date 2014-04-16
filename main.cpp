@@ -1,28 +1,71 @@
 #include <iostream>
-#include <vector>
+#include <map>
 
-struct VariableType
+class Parameter
 {
-    enum Type
-    {
-        None
-       ,Spot
-       ,Dividend
-    };
+public:
+    Parameter();
+    explicit Parameter(std::string name);
+    bool operator<(const Parameter&) const;
+    bool operator==(const Parameter&) const;
+    bool operator!=(const Parameter&) const;
+private:
+    std::string m_name;
 };
 
-struct Derivatives
-{
-    Derivatives(int iNbDividends);
-    double dValue_dSpot;
-    std::vector<double> dValue_dDividends;
-};
-
-Derivatives::Derivatives(int iNbDividends)
-: dValue_dSpot()
-, dValue_dDividends(iNbDividends)
+Parameter::Parameter()
+: m_name("")
 {
     
+}
+
+Parameter::Parameter(std::string name)
+: m_name(name)
+{
+    
+}
+
+bool Parameter::operator<(const Parameter& other) const
+{
+    return m_name < other.m_name;
+}
+
+bool Parameter::operator==(const Parameter& other) const
+{
+    return m_name == other.m_name;
+}
+
+bool Parameter::operator!=(const Parameter& other) const
+{
+    return !(*this == other);
+}
+
+class Derivatives
+{
+public:
+    double getDerivative(const Parameter&) const;
+    void addDerivative(const Parameter&, double value);
+private:
+    typedef std::map<Parameter, double> ValuesMap;
+    ValuesMap derivatives;
+};
+
+double Derivatives::getDerivative(const Parameter& parameter) const
+{
+    ValuesMap::const_iterator lb = derivatives.lower_bound(parameter);
+    if (lb != derivatives.end() && !derivatives.key_comp()(parameter, lb->first)) // if there is an equivalent object to parameter in the map
+    {
+        return lb->second;
+    }
+    else
+    {
+        return 0.;
+    }
+}
+
+void Derivatives::addDerivative(const Parameter& parameter, double value)
+{
+    derivatives[parameter] += value;
 }
 
 class Result
@@ -32,8 +75,7 @@ public:
     virtual ~Result(){ };
 
     void computeDerivatives(Derivatives&, double dTarget_dMe);
-    void setAsSpot();
-    void setAsDividend(int iDividend);
+    void setAsParameter(const Parameter&);
 
     double getValue() const;
 private:
@@ -43,15 +85,13 @@ private:
 
     double m_value;
     double m_dTarget_dMe;
-    VariableType::Type m_variableType;
-    int m_iDividend;
+    Parameter m_parameter;
 };
 
 Result::Result(double value)
 : m_value(value)
 , m_dTarget_dMe()
-, m_variableType(VariableType::None)
-, m_iDividend()
+, m_parameter()
 {
     
 }
@@ -59,26 +99,16 @@ Result::Result(double value)
 void Result::computeDerivatives(Derivatives& derivatives, double dTarget_dMe)
 {
     m_dTarget_dMe = dTarget_dMe;
-    if (m_variableType == VariableType::Spot)
+    if (m_parameter != Parameter())
     {
-        derivatives.dValue_dSpot += dTarget_dMe;
-    }
-    else if (m_variableType == VariableType::Dividend)
-    {
-        derivatives.dValue_dDividends[m_iDividend] += dTarget_dMe;
+       derivatives.addDerivative(m_parameter, m_dTarget_dMe);
     }
     compute_dTarget_dDependencies(derivatives, dTarget_dMe);
 }
 
-void Result::setAsSpot()
+void Result::setAsParameter(const Parameter& parameter)
 {
-    m_variableType = VariableType::Spot;
-}
-
-void Result::setAsDividend(int iDividend)
-{
-    m_variableType = VariableType::Dividend;
-    m_iDividend = iDividend;
+    m_parameter = parameter;
 }
 
 double Result::getValue() const
@@ -163,8 +193,7 @@ public:
     Variable& operator*=(double constant);
     Variable operator-() const;
     
-    void setAsSpot();
-    void setAsDividend(int iDividend);
+    void setAsParameter(const Parameter&);
     void computeDerivatives(Derivatives&, double dTarget_dMe = 1);
 
     double getValue() const;
@@ -227,14 +256,9 @@ Variable operator*(double constant, const Variable& operand)
     return Variable(operand) *= constant;
 }
 
-void Variable::setAsSpot()
+void Variable::setAsParameter(const Parameter& parameter)
 {
-    m_result->setAsSpot();
-}
-
-void Variable::setAsDividend(int iDividend)
-{
-    m_result->setAsDividend(iDividend);
+    m_result->setAsParameter(parameter);
 }
 
 double Variable::getValue() const
@@ -250,17 +274,17 @@ void Variable::computeDerivatives(Derivatives& derivatives, double dTarget_dMe)
 int main()
 {
     Variable a(3.);
-    a.setAsSpot();
+    a.setAsParameter(Parameter("a"));
     a += 2;
     a *= 4;
     Variable b(1.5);
-    b.setAsDividend(0);
-    Variable c = a - 2 * b;
+    b.setAsParameter(Parameter("b"));
+    Variable c = a - 3 * b;
 
-    Derivatives results(1);
+    Derivatives results;
     c.computeDerivatives(results);
     std::cout << c.getValue() << std::endl;
-    std::cout << results.dValue_dSpot << std::endl;
-    std::cout << results.dValue_dDividends[0] << std::endl;
+    std::cout << results.getDerivative(Parameter("a")) << std::endl;
+    std::cout << results.getDerivative(Parameter("b")) << std::endl;
     return 0;
 }
