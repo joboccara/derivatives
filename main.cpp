@@ -63,6 +63,7 @@ void Result::computeDerivatives(Derivatives& derivatives, double dTarget_dMe)
     {
         derivatives.dValue_dSpot += dTarget_dMe;
     }
+    else if (m_variableType == VariableType::Dividend)
     {
         derivatives.dValue_dDividends[m_iDividend] += dTarget_dMe;
     }
@@ -156,13 +157,17 @@ void ConstantResult::compute_dTarget_dDependencies(Derivatives&, double dTarget_
 class Variable
 {
 public:
-    Variable(double value);
+    explicit Variable(double value);
     Variable& operator+=(const Variable& other);
+    Variable& operator+=(double constant);
     Variable& operator*=(double constant);
+    Variable operator-() const;
     
     void setAsSpot();
     void setAsDividend(int iDividend);
     void computeDerivatives(Derivatives&, double dTarget_dMe = 1);
+
+    double getValue() const;
 private:
     Variable(Result* result);
     Result* m_result;
@@ -191,6 +196,21 @@ Variable operator+(const Variable& operand1, const Variable& operand2)
     return Variable(operand1) += operand2;
 }
 
+Variable& Variable::operator+=(double constant)
+{
+    return *this += Variable(constant);
+}
+
+Variable Variable::operator-() const
+{
+    return Variable(new ConstantMultiplierResult(m_result, -1.));
+}
+
+Variable operator-(const Variable& operand1, const Variable& operand2)
+{
+    return Variable(operand1) += (-operand2);
+}
+
 Variable& Variable::operator*=(double constant)
 {
     m_result = new ConstantMultiplierResult(m_result, constant);
@@ -217,6 +237,11 @@ void Variable::setAsDividend(int iDividend)
     m_result->setAsDividend(iDividend);
 }
 
+double Variable::getValue() const
+{
+    return m_result->getValue();
+}
+
 void Variable::computeDerivatives(Derivatives& derivatives, double dTarget_dMe)
 {
     m_result->computeDerivatives(derivatives, dTarget_dMe);
@@ -228,9 +253,14 @@ int main()
     a.setAsSpot();
     a += 2;
     a *= 4;
-    Derivatives results(0);
-    a.computeDerivatives(results);
+    Variable b(1.5);
+    b.setAsDividend(0);
+    Variable c = a - 2 * b;
 
+    Derivatives results(1);
+    c.computeDerivatives(results);
+    std::cout << c.getValue() << std::endl;
     std::cout << results.dValue_dSpot << std::endl;
+    std::cout << results.dValue_dDividends[0] << std::endl;
     return 0;
 }
