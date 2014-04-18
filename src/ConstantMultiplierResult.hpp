@@ -2,6 +2,8 @@
 
 #include "Result.hpp"
 
+#include "boost/shared_ptr.hpp"
+
 class ConstantMultiplierResult : public Result
 {
 public:
@@ -10,7 +12,7 @@ private:
     virtual void compute_dTarget_dDependencies(Derivatives&, double dTarget_dMe);
 
     const double m_constant;
-    Result* const m_operand;
+    boost::shared_ptr<Result> const m_operand;
 };
 
 

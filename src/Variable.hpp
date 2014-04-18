@@ -2,6 +2,8 @@
 
 #include "Result.hpp"
 
+#include "boost/shared_ptr.hpp"
+
 class Variable
 {
 public:
@@ -17,7 +19,7 @@ public:
     double getValue() const;
 private:
     Variable(Result* result);
-    Result* m_result;
+    boost::shared_ptr<Result> m_result;
 };
 
 Variable operator+(const Variable& operand1, const Variable& operand2);
