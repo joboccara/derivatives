@@ -4,7 +4,9 @@
 #include "ConstantResult.hpp"
 #include "PlusResult.hpp"
 
-Variable::Variable(Result* result)
+#include "boost/shared_ptr.hpp"
+
+Variable::Variable(boost::shared_ptr<Result> result)
 : m_result(result)
 {
     
@@ -18,7 +20,7 @@ Variable::Variable(double value)
 
 Variable& Variable::operator+=(const Variable& other)
 {
-    m_result = new PlusResult(m_result, other.m_result);
+    m_result = boost::shared_ptr<Result>(new PlusResult(m_result, other.m_result));
     return *this;
 }
 
@@ -34,7 +36,7 @@ Variable& Variable::operator+=(double constant)
 
 Variable Variable::operator-() const
 {
-    return Variable(new ConstantMultiplierResult(m_result, -1.));
+    return Variable(boost::shared_ptr<Result>(new ConstantMultiplierResult(m_result, -1.)));
 }
 
 Variable operator-(const Variable& operand1, const Variable& operand2)
@@ -44,7 +46,7 @@ Variable operator-(const Variable& operand1, const Variable& operand2)
 
 Variable& Variable::operator*=(double constant)
 {
-    m_result = new ConstantMultiplierResult(m_result, constant);
+    m_result = boost::shared_ptr<Result>(new ConstantMultiplierResult(m_result, constant));
     return *this;
 }
 

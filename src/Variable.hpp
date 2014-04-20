@@ -18,7 +18,7 @@ public:
 
     double getValue() const;
 private:
-    Variable(Result* result);
+    explicit Variable(boost::shared_ptr<Result> result);
     boost::shared_ptr<Result> m_result;
 };
 

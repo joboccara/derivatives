@@ -7,7 +7,7 @@
 class PlusResult : public Result
 {
 public:
-    PlusResult(Result* operand1, Result* operand2);
+    PlusResult(boost::shared_ptr<Result> operand1, boost::shared_ptr<Result> operand2);
 private:
     virtual void compute_dTarget_dDependencies(Derivatives&, double dTarget_dMe);
 

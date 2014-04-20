@@ -1,6 +1,6 @@
 #include "ConstantMultiplierResult.hpp"
 
-ConstantMultiplierResult::ConstantMultiplierResult(Result* operand, double constant)
+ConstantMultiplierResult::ConstantMultiplierResult(boost::shared_ptr<Result> operand, double constant)
 : Result(constant * operand->getValue())
 , m_constant(constant)
 , m_operand(operand)

@@ -7,7 +7,7 @@
 class ConstantMultiplierResult : public Result
 {
 public:
-    ConstantMultiplierResult(Result* operand, double constant);
+    ConstantMultiplierResult(boost::shared_ptr<Result> operand, double constant);
 private:
     virtual void compute_dTarget_dDependencies(Derivatives&, double dTarget_dMe);
 
