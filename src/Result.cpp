@@ -2,7 +2,6 @@
 
 Result::Result(double value)
 : m_value(value)
-, m_dTarget_dMe()
 , m_parameter()
 {
     
@@ -10,10 +9,9 @@ Result::Result(double value)
 
 void Result::computeDerivatives(Derivatives& derivatives, double dTarget_dMe)
 {
-    m_dTarget_dMe = dTarget_dMe;
     if (m_parameter != Parameter())
     {
-       derivatives.addDerivative(m_parameter, m_dTarget_dMe);
+       derivatives.addDerivative(m_parameter, dTarget_dMe);
     }
     compute_dTarget_dDependencies(derivatives, dTarget_dMe);
 }

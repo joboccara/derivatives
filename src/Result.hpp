@@ -19,7 +19,6 @@ private:
     Result& operator=(const Result&);
 
     double m_value;
-    double m_dTarget_dMe;
     Parameter m_parameter;
 };
 
