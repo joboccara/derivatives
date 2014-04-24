@@ -3,7 +3,9 @@
 #include "Derivatives.hpp"
 #include "Parameter.hpp"
 
-class Result
+#include "MemoryLogger.hpp"
+
+class Result : public MemoryLogger<Result>
 {
 public:
     explicit Result(double value);
