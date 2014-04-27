@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(DERIVATIVES)
 
+set(CMAKE_BUILD_TYPE Debug)
 
 FIND_PACKAGE(Boost 1.55.0 COMPONENTS shared_ptr)
 
@@ -13,9 +14,11 @@ ADD_EXECUTABLE(derivatives
                     Derivatives
                     Parameter
                     Result
+                    ConstantAdditionerResult
                     ConstantMultiplierResult
                     ConstantResult
                     PlusResult
+                    MinusResult
                     Variable
               )
 

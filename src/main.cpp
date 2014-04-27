@@ -1,15 +1,11 @@
 #include "Derivatives.hpp"
 #include "Variable.hpp"
 
-#include "Result.hpp"
-#include "MemoryLogger.hpp"
-
 #include <iostream>
 
-int main()
+void test()
 {
     Variable a(3.);
-    std::cout << MemoryLogger<Result>::getCurrentAllocatedSize() << std::endl;
     a.setAsParameter(Parameter("a"));
     a += 2;
     a *= 4;
@@ -22,6 +18,10 @@ int main()
     std::cout << c.getValue() << std::endl;
     std::cout << results.getDerivative(Parameter("a")) << std::endl;
     std::cout << results.getDerivative(Parameter("b")) << std::endl;
-    std::cout << MemoryLogger<Result>::getCurrentAllocatedSize() << std::endl;
+}
+
+int main()
+{
+    test();
     return 0;
 }

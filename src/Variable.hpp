@@ -10,6 +10,8 @@ public:
     explicit Variable(double value);
     Variable& operator+=(const Variable& other);
     Variable& operator+=(double constant);
+    Variable& operator-=(const Variable& other);
+    Variable& operator-=(double constant);
     Variable& operator*=(double constant);
     Variable operator-() const;
     
@@ -23,7 +25,11 @@ private:
 };
 
 Variable operator+(const Variable& operand1, const Variable& operand2);
+Variable operator+(const Variable& operand, double constant);
+Variable operator+(double constant, const Variable& operand);
 Variable operator-(const Variable& operand1, const Variable& operand2);
+Variable operator-(const Variable& operand, double constant);
+Variable operator-(double constant, const Variable& operand);
 Variable operator*(const Variable& operand, double constant);
 Variable operator*(double constant, const Variable& operand);
 
