@@ -1,7 +1,7 @@
 #pragma once
 #include <cstddef>
 
-/* Simple memory print monitoring
+/* Simple memory usage monitoring
 This component monitors per-class memory usage if no class in the hierarchy overrides
 operator new or operator delete. A class T to be monitored should inherit from
 MemoryLogger<T>. To get the current size of memory allocated on the free store for
@@ -33,7 +33,7 @@ private:
    static void inheritanceCheck()
    {
       T* p = 0;
-      MemoryLogger<T>* pBase = p; // rough compile-time check to make sure T inherits from MemoryLogger<T>
+      MemoryLogger<T>* pBase = p; // compile-time check to make sure T inherits from MemoryLogger<T>
    }
 
    static size_t m_allocatedSize;
