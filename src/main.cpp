@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-void test()
+void test1() // +, -
 {
     Variable a(3.);
     a.setAsParameter(Parameter("a"));
@@ -20,8 +20,32 @@ void test()
     std::cout << results.getDerivative(Parameter("b")) << std::endl;
 }
 
+void test2() // *
+{
+    Variable t(2.);
+    t.setAsParameter("time");
+    Variable r = (1 - t) * (2 + t * t);
+
+    Derivatives results;
+    r.computeDerivatives(results);
+    std::cout << "value = " << r.getValue() << std::endl;
+    std::cout << "derivative = " << results.getDerivative("time") << std::endl;
+}
+
+void test3() // /
+{
+    Variable x(3.);
+    x.setAsParameter("Length");
+    Variable z = (2 / x + 3) / ((1 + x) * (1 - x));
+
+    Derivatives results;
+    z.computeDerivatives(results);
+    std::cout << "value = " << z.getValue() << std::endl;
+    std::cout << "derivative = " << results.getDerivative("Length") << std::endl;
+}
+
 int main()
 {
-    test();
+    test3();
     return 0;
 }

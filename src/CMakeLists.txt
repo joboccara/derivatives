@@ -17,8 +17,10 @@ ADD_EXECUTABLE(derivatives
                     ConstantAdditionerResult
                     ConstantMultiplierResult
                     ConstantResult
+                    DivisionResult
                     PlusResult
                     MinusResult
+                    MultiplyResult
                     Variable
               )
 
