@@ -1,6 +1,14 @@
 #pragma once
 #include <cstddef>
 
+/* Simple memory print monitoring
+This component monitors per-class memory usage if no class in the hierarchy overrides
+operator new or operator delete. A class T to be monitored should inherit from
+MemoryLogger<T>. To get the current size of memory allocated on the free store for
+class T at a given time, one should use:
+size_t currentAllocatedSize = MemoryLogger<T>::getCurrentAllocatedSize();
+*/
+
 template<typename T>
 class MemoryLogger
 {
