@@ -6,7 +6,13 @@ Parameter::Parameter()
     
 }
 
-Parameter::Parameter(std::string name)
+Parameter::Parameter(const char *name)
+: m_name(name)
+{
+    
+}
+
+Parameter::Parameter(const std::string& name)
 : m_name(name)
 {
     
