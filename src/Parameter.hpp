@@ -6,7 +6,7 @@ class Parameter
 {
 public:
     Parameter();
-    explicit Parameter(std::string name);
+    Parameter(std::string name);
     bool operator<(const Parameter&) const;
     bool operator==(const Parameter&) const;
     bool operator!=(const Parameter&) const;
