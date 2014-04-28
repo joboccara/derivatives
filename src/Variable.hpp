@@ -22,7 +22,8 @@ public:
     void computeDerivatives(Derivatives&, double dTarget_dMe = 1);
 
     double getValue() const;
-private:
+
+//private:
     explicit Variable(boost::shared_ptr<Result> result);
     boost::shared_ptr<Result> m_result;
 };

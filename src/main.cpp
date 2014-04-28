@@ -1,6 +1,8 @@
 #include "Derivatives.hpp"
 #include "Variable.hpp"
 
+#include "UserDefinedFunctions.hpp"
+
 #include <iostream>
 
 void test1() // +, -
@@ -44,8 +46,20 @@ void test3() // /
     std::cout << "derivative = " << results.getDerivative("Length") << std::endl;
 }
 
+void test4() // user defined functions
+{
+    Variable x(3.141592657 / 4);
+    x.setAsParameter("x");
+    Variable s = 2 * sin(x);
+
+    Derivatives results;
+    s.computeDerivatives(results);
+    std::cout << "value = " << s.getValue() << std::endl;
+    std::cout << "derivative = " << results.getDerivative("x") << std::endl;
+}
+
 int main()
 {
-    test3();
+    test4();
     return 0;
 }
