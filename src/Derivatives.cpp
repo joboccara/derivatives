@@ -1,5 +1,7 @@
 #include "Derivatives.hpp"
 
+using namespace algo_diff;
+
 double Derivatives::getDerivative(const Parameter& parameter) const
 {
     ValuesMap::const_iterator lb = derivatives.lower_bound(parameter);

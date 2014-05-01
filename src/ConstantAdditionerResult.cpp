@@ -1,5 +1,7 @@
 #include "ConstantAdditionerResult.hpp"
 
+using namespace algo_diff;
+
 ConstantAdditionerResult::ConstantAdditionerResult(boost::shared_ptr<Result> operand, double constant)
 : Result(operand->getValue() + constant)
 , m_operand(operand)

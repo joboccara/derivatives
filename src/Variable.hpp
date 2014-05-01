@@ -4,6 +4,9 @@
 
 #include "boost/shared_ptr.hpp"
 
+namespace algo_diff
+{
+
 class Variable
 {
 public:
@@ -28,17 +31,19 @@ public:
     boost::shared_ptr<Result> m_result;
 };
 
-Variable operator+(const Variable& operand1, const Variable& operand2);
-Variable operator+(const Variable& operand, double constant);
-Variable operator+(double constant, const Variable& operand);
-Variable operator-(const Variable& operand1, const Variable& operand2);
-Variable operator-(const Variable& operand, double constant);
-Variable operator-(double constant, const Variable& operand);
-Variable operator*(const Variable& operand1, const Variable& operand2);
-Variable operator*(const Variable& operand, double constant);
-Variable operator*(double constant, const Variable& operand);
-Variable operator/(const Variable& operand1, const Variable& operand2);
-Variable operator/(const Variable& operand, double constant);
-Variable operator/(double constant, const Variable& operand);
+} // namespace algo_diff
+
+algo_diff::Variable operator+(const algo_diff::Variable& operand1, const algo_diff::Variable& operand2);
+algo_diff::Variable operator+(const algo_diff::Variable& operand, double constant);
+algo_diff::Variable operator+(double constant, const algo_diff::Variable& operand);
+algo_diff::Variable operator-(const algo_diff::Variable& operand1, const algo_diff::Variable& operand2);
+algo_diff::Variable operator-(const algo_diff::Variable& operand, double constant);
+algo_diff::Variable operator-(double constant, const algo_diff::Variable& operand);
+algo_diff::Variable operator*(const algo_diff::Variable& operand1, const algo_diff::Variable& operand2);
+algo_diff::Variable operator*(const algo_diff::Variable& operand, double constant);
+algo_diff::Variable operator*(double constant, const algo_diff::Variable& operand);
+algo_diff::Variable operator/(const algo_diff::Variable& operand1, const algo_diff::Variable& operand2);
+algo_diff::Variable operator/(const algo_diff::Variable& operand, double constant);
+algo_diff::Variable operator/(double constant, const algo_diff::Variable& operand);
 
 

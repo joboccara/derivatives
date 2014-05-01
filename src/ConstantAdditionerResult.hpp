@@ -4,6 +4,9 @@
 
 #include "boost/shared_ptr.hpp"
 
+namespace algo_diff
+{
+
 class ConstantAdditionerResult : public Result
 {
 public:
@@ -15,4 +18,5 @@ private:
 };
 
 
+} // namespace algo_diff
 

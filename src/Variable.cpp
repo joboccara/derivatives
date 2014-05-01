@@ -9,6 +9,8 @@
 #include "PlusResult.hpp"
 
 #include "boost/shared_ptr.hpp"
+
+using namespace algo_diff;
     
 Variable::Variable(boost::shared_ptr<Result> result)
 : m_result(result)

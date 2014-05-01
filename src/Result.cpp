@@ -1,5 +1,7 @@
 #include "Result.hpp"
 
+using namespace algo_diff;
+
 Result::Result(double value)
 : m_value(value)
 , m_parameter()

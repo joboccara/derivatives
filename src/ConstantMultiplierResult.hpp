@@ -4,6 +4,9 @@
 
 #include "boost/shared_ptr.hpp"
 
+namespace algo_diff
+{
+
 class ConstantMultiplierResult : public Result
 {
 public:
@@ -15,4 +18,5 @@ private:
     boost::shared_ptr<Result> const m_operand;
 };
 
+} // namespace algo_diff
 

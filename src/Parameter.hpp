@@ -2,6 +2,9 @@
 
 #include <string>
 
+namespace algo_diff
+{
+
 class Parameter
 {
 public:
@@ -15,4 +18,5 @@ private:
     std::string m_name;
 };
 
+} // namespace algo_diff
 

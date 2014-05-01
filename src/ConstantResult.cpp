@@ -1,5 +1,7 @@
 #include "ConstantResult.hpp"
 
+using namespace algo_diff;
+
 ConstantResult::ConstantResult(double value)
 : Result(value)
 {

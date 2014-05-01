@@ -4,6 +4,9 @@
 
 #include <map>
 
+namespace algo_diff
+{
+
 class Derivatives
 {
 public:
@@ -14,4 +17,5 @@ private:
     ValuesMap derivatives;
 };
 
+} // namespace algo_diff
 

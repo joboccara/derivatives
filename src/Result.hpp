@@ -5,6 +5,9 @@
 
 #include "MemoryLogger.hpp"
 
+namespace algo_diff
+{
+
 class Result : public MemoryLogger<Result>
 {
 public:
@@ -23,4 +26,6 @@ private:
     double m_value;
     Parameter m_parameter;
 };
+
+} // namespace algo_diff
 

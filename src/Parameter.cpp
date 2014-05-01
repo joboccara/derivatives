@@ -1,5 +1,7 @@
 #include "Parameter.hpp"
 
+using namespace algo_diff;
+
 Parameter::Parameter()
 : m_name("")
 {

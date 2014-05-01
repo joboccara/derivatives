@@ -1,5 +1,7 @@
 #include "MultiplyResult.hpp"
 
+using namespace algo_diff;
+
 MultiplyResult::MultiplyResult(boost::shared_ptr<Result> operand1, boost::shared_ptr<Result> operand2)
 : Result(operand1->getValue() * operand2->getValue())
 , m_operand1(operand1)

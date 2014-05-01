@@ -4,6 +4,9 @@
 
 #include "boost/shared_ptr.hpp"
 
+namespace algo_diff
+{
+
 class MinusResult : public Result
 {
 public:
@@ -15,4 +18,5 @@ private:
     const boost::shared_ptr<Result> m_operand2;
 };
 
+} // namespace algo_diff
 

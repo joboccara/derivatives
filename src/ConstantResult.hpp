@@ -2,6 +2,9 @@
 
 #include "Result.hpp"
 
+namespace algo_diff
+{
+
 class ConstantResult : public Result
 {
 public:
@@ -10,4 +13,5 @@ private:
     virtual void compute_dTarget_dDependencies(Derivatives&, double dTarget_dMe);
 };
 
+} // namespace algo_diff
 

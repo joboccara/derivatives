@@ -1,5 +1,7 @@
 #include "ConstantMultiplierResult.hpp"
 
+using namespace algo_diff;
+
 ConstantMultiplierResult::ConstantMultiplierResult(boost::shared_ptr<Result> operand, double constant)
 : Result(constant * operand->getValue())
 , m_constant(constant)
