@@ -8,7 +8,7 @@
 namespace algo_diff
 {
 
-class Result : public MemoryLogger<Result>
+class Result //: public MemoryLogger<Result>
 {
 public:
     explicit Result(double value);
