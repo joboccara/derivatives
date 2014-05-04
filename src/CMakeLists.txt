@@ -11,6 +11,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 ADD_EXECUTABLE(derivatives
                     main
+
                     Derivatives
                     Parameter
                     Result
@@ -22,6 +23,8 @@ ADD_EXECUTABLE(derivatives
                     MinusResult
                     MultiplyResult
                     Variable
+
+                    PerformanceTests
               )
 
 TARGET_LINK_LIBRARIES(derivatives ${Boost_LIBRARIES})
