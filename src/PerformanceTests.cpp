@@ -44,7 +44,7 @@ void initializeDefaultParameters(Parameters<value_type>& parameters)
     parameters.spot = value_type(SpotDefaultValue);
     parameters.rate = 0.03;
     parameters.spotDate = 0;
-    parameters.maturity = 50 * 365;
+    parameters.maturity = 50;
     for (Date date = parameters.spotDate; date < parameters.maturity; date += 7)
     {
         parameters.dividends.push_back(Dividend(date, 0.01, Dividend::Absolute));
