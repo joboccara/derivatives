@@ -61,12 +61,11 @@ void test4() // user defined functions
 void test5() // doc example
 {
     using namespace algo_diff;
-    Variable x(3.);
-    x.setAsParameter("x");
+    Variable x(3., "x");
     x += 4;
     Variable y(-2.);
+    y += 4;
     y.setAsParameter("y");
-    x += 4;
     Variable z = (2 / sin(y) + 3) / ((1 + x) * (1 - x));
     z *= 2 * x;
 

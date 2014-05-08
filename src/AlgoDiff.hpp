@@ -19,18 +19,18 @@
 
     To compute derivatives, simply use algo_diff::Variable where double would be
     normally used in the function calculation code. Indicate parameters with regards
-    to which the result should be derived. Then retrieve the derivatives from the
+    to which the result should be derived (either when constructing the Variable
+    like x in the example or later like y). Then retrieve the derivatives from the
     function result in a algo_diff::Derivatives instance.
 
     Utilisation example:
 
     using namespace algo_diff;
-    Variable x(3.);
-    x.setAsParameter("x");
+    Variable x(3., "x");
     x += 4;
     Variable y(-2.);
+    y += 4;
     y.setAsParameter("y");
-    x += 4;
     Variable z = (2 / sin(y) + 3) / ((1 + x) * (1 - x));
     z *= 2 * x;
 
