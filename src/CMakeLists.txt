@@ -22,6 +22,8 @@ ADD_EXECUTABLE(derivatives
                     MinusResult
                     MultiplyResult
                     Variable
+
+                    PerformanceTests
               )
 
 TARGET_LINK_LIBRARIES(derivatives ${Boost_LIBRARIES})
