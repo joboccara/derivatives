@@ -2,7 +2,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <iomanip>
 using namespace std;
 
 namespace
@@ -85,9 +84,9 @@ void test5() // doc example
 
     Derivatives results;
     z.computeDerivatives(results);
-    bool ok = isDoubleEqual(z.getValue(), -0.1467582709);
-    ok &= isDoubleEqual(results.getDerivative("x"), 0.01356402201);
-    ok &= isDoubleEqual(results.getDerivative("y"), -0.1845466236);
+    bool ok = isDoubleEqual(z.getValue(), -1.516520933);
+    ok &= isDoubleEqual(results.getDerivative("x"), 0.2256727578);
+    ok &= isDoubleEqual(results.getDerivative("y"), -0.2935969011);
     cout << "TEST5 : " << (ok ? "OK" : "FAILED") << endl;
 }
 }
