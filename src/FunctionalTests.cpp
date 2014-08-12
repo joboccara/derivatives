@@ -1,6 +1,16 @@
 #include "AlgoDiff.hpp"
 
+#include <cstdlib>
 #include <iostream>
+#include <iomanip>
+using namespace std;
+
+namespace
+{
+bool isDoubleEqual(double x1, double x2)
+{
+    return abs(x1 - x2) < 1e-9;
+}
 
 void test1() // +, -
 {
@@ -14,9 +24,10 @@ void test1() // +, -
 
     algo_diff::Derivatives results;
     c.computeDerivatives(results);
-    std::cout << c.getValue() << std::endl;
-    std::cout << results.getDerivative(algo_diff::Parameter("a")) << std::endl;
-    std::cout << results.getDerivative(algo_diff::Parameter("b")) << std::endl;
+    bool ok = c.getValue() == 15.5;
+    ok &= results.getDerivative(algo_diff::Parameter("a")) == 4.;
+    ok &= results.getDerivative(algo_diff::Parameter("b")) == -3.;
+    cout << "TEST1 : " << (ok ? "OK" : "FAILED") << endl;
 }
 
 void test2() // *
@@ -28,8 +39,9 @@ void test2() // *
 
     Derivatives results;
     r.computeDerivatives(results);
-    std::cout << "value = " << r.getValue() << std::endl;
-    std::cout << "derivative = " << results.getDerivative("time") << std::endl;
+    bool ok = r.getValue() == -6.;
+    ok &= results.getDerivative("time") == -10.;
+    cout << "TEST2 : " << (ok ? "OK" : "FAILED") << endl;
 }
 
 void test3() // /
@@ -41,8 +53,9 @@ void test3() // /
 
     Derivatives results;
     z.computeDerivatives(results);
-    std::cout << "value = " << z.getValue() << std::endl;
-    std::cout << "derivative = " << results.getDerivative("Length") << std::endl;
+    bool ok = isDoubleEqual(z.getValue(), -0.4583333333) ;
+    ok &= isDoubleEqual(results.getDerivative("x"), 0.3715277778) ;
+    cout << "TEST3 : " << (ok ? "OK" : "FAILED") << endl;
 }
 
 void test4() // user defined functions
@@ -54,8 +67,9 @@ void test4() // user defined functions
 
     Derivatives results;
     s.computeDerivatives(results);
-    std::cout << "value = " << s.getValue() << std::endl;
-    std::cout << "derivative = " << results.getDerivative("x") << std::endl;
+    bool ok = isDoubleEqual(s.getValue(), 1.414213564);
+    ok &= isDoubleEqual(results.getDerivative("x"), 1.414213561);
+    cout << "TEST4 : " << (ok ? "OK" : "FAILED") << endl;
 }
 
 void test5() // doc example
@@ -72,8 +86,20 @@ void test5() // doc example
 
     Derivatives results;
     z.computeDerivatives(results);
-    std::cout << "z = " << z.getValue() << std::endl;
-    std::cout << "dz/dx = " << results.getDerivative("x") << std::endl;
-    std::cout << "dy/dx = " << results.getDerivative("y") << std::endl;
+    bool ok = isDoubleEqual(z.getValue(), -0.1467582709);
+    ok &= isDoubleEqual(results.getDerivative("x"), 0.01356402201);
+    ok &= isDoubleEqual(results.getDerivative("y"), -0.1845466236);
+    cout << "TEST5 : " << (ok ? "OK" : "FAILED") << endl;
+}
+}
+
+void launchFunctionalTests()
+{
+    cout << "FUNCTIONAL TESTS:" << endl;
+    test1();
+    test2();
+    test3();
+    test4();
+    test5();
 }
 
