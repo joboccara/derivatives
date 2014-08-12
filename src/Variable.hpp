@@ -11,6 +11,7 @@ class Variable
 {
 public:
     explicit Variable(double value);
+    Variable(double value, const Parameter&);
     Variable& operator+=(const Variable& other);
     Variable& operator+=(double constant);
     Variable& operator-=(const Variable& other);

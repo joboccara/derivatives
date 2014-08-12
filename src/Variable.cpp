@@ -24,6 +24,12 @@ Variable::Variable(double value)
     
 }
 
+Variable::Variable(double value, const Parameter& parameter)
+: m_result(new ConstantResult(value))
+{
+    setAsParameter(parameter);
+}
+
 void Variable::setAsParameter(const Parameter& parameter)
 {
     m_result->setAsParameter(parameter);

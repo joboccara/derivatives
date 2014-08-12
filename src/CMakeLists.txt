@@ -11,7 +11,6 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
 ADD_EXECUTABLE(derivatives
                     main
-
                     Derivatives
                     Parameter
                     Result
