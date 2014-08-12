@@ -4,7 +4,7 @@
 #include "Variable.hpp"
 
 #include <cmath>
-#include "Math.hpp"
+#include "MathFunctions.hpp"
 
 /*  ************ LIBRARY DESCRIPTION *************
 

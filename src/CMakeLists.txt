@@ -19,11 +19,13 @@ ADD_EXECUTABLE(derivatives
                     ConstantResult
                     DivisionResult
                     PlusResult
+                    MathFunctions
                     MinusResult
                     MultiplyResult
                     Variable
 
                     FunctionalTests
+                    PerformanceTests
               )
 
 TARGET_LINK_LIBRARIES(derivatives ${Boost_LIBRARIES})

@@ -34,7 +34,7 @@ private:
 } // namespace algo_diff
 
 #define DEFINE_DERIVED_FUNCTION(function, derivedFunction) \
-algo_diff::Variable function(const algo_diff::Variable& operand) \
+inline algo_diff::Variable function(const algo_diff::Variable& operand) \
 { \
     using namespace algo_diff; \
     return Variable(boost::shared_ptr<Result>(new GenericFunctionResult<function, derivedFunction>(operand.m_result))); \

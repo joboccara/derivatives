@@ -1,5 +1,3 @@
-#pragma once
-
 #include <cmath>
 
 double minusSin(double x)
@@ -16,3 +14,4 @@ double sqrtDerivative(double x)
 {
     return -1 / (2 * sqrt(x));
 }
+
