@@ -89,6 +89,26 @@ void test5() // doc example
     ok &= isDoubleEqual(results.getDerivative("y"), -0.2935969011);
     cout << "TEST5 : " << (ok ? "OK" : "FAILED") << endl;
 }
+ 
+void test6() // complex operation tree
+{
+    using namespace algo_diff;
+    Variable a(5, "a");
+    Variable b(-2, "b");
+    Variable c = -a + 2 * b;
+    c.setAsParameter("c");
+    Variable d = 3 * c;
+    d *= 2 * b;
+    Variable e = d - 2 * c;
+
+    Derivatives results;
+    e.computeDerivatives(results);
+    bool ok = isDoubleEqual(e.getValue(), 126);
+    ok &= isDoubleEqual(results.getDerivative("a"), 14);
+    ok &= isDoubleEqual(results.getDerivative("b"), -82);
+    ok &= isDoubleEqual(results.getDerivative("c"), -14);
+    cout << "TEST6 : " << (ok ? "OK" : "FAILED") << endl;
+}
 }
 
 void launchFunctionalTests()
@@ -99,5 +119,6 @@ void launchFunctionalTests()
     test3();
     test4();
     test5();
+    test6();
 }
 
