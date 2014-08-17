@@ -1,6 +1,6 @@
 #include "AlgoDiff.hpp"
 
-#include <cstdlib>
+#include <cmath>
 #include <iostream>
 using namespace std;
 
@@ -8,6 +8,7 @@ namespace
 {
 bool isDoubleEqual(double x1, double x2)
 {
+    cout << abs(x1 - x2);
     return abs(x1 - x2) < 1e-9;
 }
 
