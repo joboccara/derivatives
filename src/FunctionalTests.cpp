@@ -8,7 +8,6 @@ namespace
 {
 bool isDoubleEqual(double x1, double x2)
 {
-    cout << abs(x1 - x2);
     return abs(x1 - x2) < 1e-9;
 }
 
