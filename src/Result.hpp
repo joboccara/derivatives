@@ -25,6 +25,7 @@ private:
 
     double m_value;
     Parameter m_parameter;
+    Derivatives m_localDerivatives;
 };
 
 } // namespace algo_diff
