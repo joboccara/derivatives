@@ -89,8 +89,6 @@ private:
     }
 };
 
-} // anonymous namepace
-
 double compute_dfds_classic()
 {
     Parameters<double> parameters;
@@ -111,5 +109,13 @@ double compute_dfds_algodiff()
     Derivatives results;
     forward.computeDerivatives(results);
     return results.getDerivative("spot");
+}
+
+} // anonymous namepace
+
+void launchPerformanceTests()
+{
+    std::cout << "dF/dS classic = " << compute_dfds_classic() << std::endl;
+    std::cout << "dF/dS algodiff = " << compute_dfds_algodiff() << std::endl;
 }
 
