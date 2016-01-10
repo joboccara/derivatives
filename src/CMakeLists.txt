@@ -2,9 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(DERIVATIVES)
 
-SET(CMAKE_BUILD_TYPE Debug)
-SET(GCC_COVERAGE_COMPILE_FLAGS "--std=c++11")
-SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
+set(CMAKE_BUILD_TYPE Debug)
 
 FIND_PACKAGE(Boost 1.55.0 COMPONENTS shared_ptr)
 
@@ -16,8 +14,14 @@ ADD_EXECUTABLE(derivatives
                     Derivatives
                     Parameter
                     Result
+                    ConstantAdditionerResult
+                    ConstantMultiplierResult
                     ConstantResult
+                    DivisionResult
+                    PlusResult
                     MathFunctions
+                    MinusResult
+                    MultiplyResult
                     Variable
 
                     FunctionalTests
