@@ -1,4 +1,6 @@
 #pragma once
 
-void launchPerformanceTests();
+#include <cstddef>
+
+void launchPerformanceTests(size_t nbDerivatives);
 

@@ -1,5 +1,5 @@
 #include "Derivatives.hpp"
-#include "GenericFunctionResult.hpp"
+#include "GenericFunction.hpp"
 #include "Parameter.hpp"
 #include "Variable.hpp"
 

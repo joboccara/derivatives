@@ -1,15 +1,20 @@
 #include "AlgoDiff.hpp"
 
+#include <algorithm>
 #include <cmath>
+#include <sstream>
+#include <string>
 #include <vector>
 
 
 using namespace algo_diff;
+using namespace std;
 typedef int Date;
 
 namespace
 {
     
+template<typename value_type>
 struct Dividend
 {
     enum Nature
@@ -22,7 +27,7 @@ struct Dividend
     : date(aDate), value(aValue), nature(aNature){ }
 
     Date date;
-    double value;
+    value_type value;
     Nature nature;
 };
 
@@ -32,7 +37,7 @@ struct Parameters
 {
     Parameters(): spot(SpotDefaultValue), dividends(), rate(), spotDate(), maturity() { }
     value_type spot;
-    std::vector<Dividend> dividends;
+    vector<Dividend<value_type> > dividends;
     double rate;
     Date spotDate;
     Date maturity;
@@ -47,8 +52,8 @@ void initializeDefaultParameters(Parameters<value_type>& parameters)
     parameters.maturity = 50 * 365;
     for (Date date = parameters.spotDate; date < parameters.maturity; date += 7)
     {
-        parameters.dividends.push_back(Dividend(date, 0.01, Dividend::Absolute));
-        parameters.dividends.push_back(Dividend(date, 0.1, Dividend::ForwardProportional));
+        parameters.dividends.push_back(Dividend<value_type>(date, 0.01, Dividend<value_type>::Absolute));
+        parameters.dividends.push_back(Dividend<value_type>(date, 0.1, Dividend<value_type>::ForwardProportional));
     }
 }
 
@@ -65,9 +70,9 @@ public:
     {
         value_type forward(parameters.spot);
         Date currentDate = parameters.spotDate;
-        for (std::vector<Dividend>::const_iterator it = parameters.dividends.begin(); it != parameters.dividends.end(); ++it)
+        for (typename vector<Dividend<value_type> >::const_iterator it = parameters.dividends.begin(); it != parameters.dividends.end(); ++it)
         {
-            const Dividend& dividend = *it;
+            const Dividend<value_type>& dividend = *it;
             forward *= getCapitalizationFactor(parameters.rate, currentDate, dividend.date);
             forward -= computeDividend(dividend, forward);
             currentDate = dividend.date;
@@ -76,46 +81,89 @@ public:
         return forward;
     }
 private:
-    static value_type computeDividend(const Dividend& dividend, const value_type& forward)
+    static value_type computeDividend(const Dividend<value_type>& dividend, const value_type& forward)
     {
-        if (dividend.nature == Dividend::Absolute)
+        if (dividend.nature == Dividend<value_type>::Absolute)
         {
-            return value_type(dividend.value);
+            return dividend.value;
         }
-        else if (dividend.nature == Dividend::ForwardProportional)
+        else if (dividend.nature == Dividend<value_type>::ForwardProportional)
         {
             return dividend.value * forward / 100;
         }
     }
 };
 
-double compute_dfds_classic()
+static double compute_one_derivative_classic(double& parameterToShift, double dShift, const Parameters<double>& parameters, double forward)
+{
+}
+
+vector<double> compute_forward_derivatives_classic(size_t nbDividendsDerivatives)
 {
     Parameters<double> parameters;
     initializeDefaultParameters(parameters);
     double forward = ForwardCalculator<double>::compute(parameters);
-    double dShift = 1.;
-    parameters.spot += dShift;
-    double shiftedForward = ForwardCalculator<double>::compute(parameters);
-    return (shiftedForward - forward) / dShift;
+    vector<double> results;
+    for (int i = 0; i < nbDividendsDerivatives; ++i)
+    {
+        if (i < parameters.dividends.size())
+        {
+            double dShift = 0.2;
+            parameters.dividends[i].value += dShift;
+            double shiftedForward = ForwardCalculator<double>::compute(parameters);
+            double dFdDiv = (shiftedForward - forward) / dShift;
+            parameters.dividends[i].value -= dShift;
+            results.push_back(dFdDiv);
+        }
+    }
+    return results;
 }
 
-double compute_dfds_algodiff()
+string getDividendId(int iDividend)
+{
+    ostringstream dividendId;
+    dividendId << "dividend" << iDividend;
+    return dividendId.str();
+}
+
+vector<double> compute_forward_derivatives_algodiff(size_t nbDividendsDerivatives)
 {
     Parameters<Variable> parameters;
     initializeDefaultParameters(parameters);
-    parameters.spot.setAsParameter("spot");
+    size_t nbComputedDerivatives = min(nbDividendsDerivatives, parameters.dividends.size());
+    for (int i = 0; i < nbComputedDerivatives; ++i)
+    {
+        parameters.dividends[i].value.setAsParameter(getDividendId(i));
+    }
     Variable forward = ForwardCalculator<Variable>::compute(parameters);
-    Derivatives results;
-    forward.computeDerivatives(results);
-    return results.getDerivative("spot");
+    Derivatives derivatives;
+    forward.computeDerivatives(derivatives);
+
+    vector<double> results;
+    for (int i = 0; i < nbComputedDerivatives; ++i)
+    {
+        double dFdDiv = derivatives.getDerivative(getDividendId(i));
+        results.push_back(dFdDiv);
+    }
+    return results;
+}
+
+template<typename Container>
+void printContainer(const Container& c, string title)
+{
+    cout << "CONTENTS OF: " << title << endl;
+    for (typename Container::const_iterator it = c.begin(); it != c.end(); ++it)
+    {
+        cout << *it << endl;
+    }
+    cout << endl;
 }
 
 } // anonymous namepace
 
-void launchPerformanceTests()
+void launchPerformanceTests(size_t nbDerivatives)
 {
-    std::cout << "dF/dS classic = " << compute_dfds_classic() << std::endl;
-    std::cout << "dF/dS algodiff = " << compute_dfds_algodiff() << std::endl;
+    printContainer(compute_forward_derivatives_classic(nbDerivatives), "classic results");
+    printContainer(compute_forward_derivatives_algodiff(nbDerivatives), "algodiff results");
 }
 
